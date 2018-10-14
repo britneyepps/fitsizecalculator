@@ -1,0 +1,29 @@
+version: "3.2"
+
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  flyway:
+    image: boxfuse/flyway
+    command: -url=jdbc:postgresql://db:5432/postgres -user=postgres -password=postgres -connectRetries=300 migrate
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - db
+  project:
+    image: golang
+    restart: unless-stopped
+    working_dir: /src
+    command: go run main.go
+    volumes:
+      - ./src:/src
+    depends_on:
+      - db
+

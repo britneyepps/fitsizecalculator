@@ -1,0 +1,92 @@
+<html>
+	<head>
+	
+	</head>
+	<body style="text-align:center;">
+		<h1> StockX True Fit Calculator</h1>
+		<p > StockX True Fit calculator helps 
+		you decide the best size to buy for select shoes without trying them on. Based on the information entered by users like you, 
+		the true fit for each below shoe is calculated by the average.</p>
+		<p> The True Fit Scale is as follows: </p>
+		<p> 1 - Really Small </p>
+		<p> 2 - Small</p>
+		<p> 3 - True to Size </p>
+		<p> 4 - Big </p>
+		<p> 5 - Really Big </p>
+		
+		<div id="shoelistdiv">
+			<p> Select a shoe below from the drop down and enter in your value for true fit :</p>			
+		</div>
+		<br/>
+		<div id="sendfitval">
+			True Fit Value (On a scale of 1 - 5) :
+			<input type="text" id="fitval" name="fitval">
+			<br />
+			<br />
+			<button onClick="sendFitVal()">Send Fit Value</button>
+			<p id = "sendcalcholder"></p>
+		</div>
+		<br />
+		<br />
+		<div id="getfitcalc">
+			<button onClick="getFitCalc()">Get True Fit Calc</button>
+			<p id ="calcholder"></p>
+		</div>	
+		
+		<script>
+			shoeDropDown = document.getElementById("shoelistdiv")
+			var selectList = document.createElement("select");
+			selectList.id="shoeListSelect";
+			shoeDropDown.appendChild(selectList);
+			fetch("/shoelist")
+			.then(response => response.json())
+			.then(shoesList => {
+				shoesList.forEach(shoes => {
+					var option = document.createElement("option");
+					option.value = shoes.productid;
+					option.text = shoes.productname;
+					selectList.appendChild(option);
+				})
+			})
+			
+			function sendFitVal(){
+				var fitval = document.getElementById("fitval").value;
+				var productid = document.getElementById("shoeListSelect").value;
+				
+				if(isNaN(fitval) || fitval < 1 || fitval > 5) {
+					element = document.getElementById("sendcalcholder");
+					element.innerHTML = "Please enter a number between 1 and 5";
+				} else {
+					fetch("/sendfitval/"+productid+"/" + fitval,
+					{
+					method: "post",
+					headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+					}
+					})	
+					.then( res => {
+						element = document.getElementById("sendcalcholder");
+					element.innerHTML = "Successful Entry";
+					})	
+					.catch(err=>console.log(err));
+					}
+			}
+			
+			function getFitCalc() {
+				var productid = document.getElementById("shoeListSelect").value;
+				
+				fetch("/getfitcalc/"+productid)
+				.then(response => response.json())
+				.then( res => {
+					 element = document.getElementById("calcholder");
+					 element.innerHTML = "True fit value of " +  res.fitcalcvalue;
+				})	
+				.catch(err=>console.log(err));
+			}
+		</script>
+		
+	</body>
+
+ 
+</html>
