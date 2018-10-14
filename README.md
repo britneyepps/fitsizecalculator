@@ -7,9 +7,10 @@ Fit Size Calculator is a GoLang API library that helps calculate the true fit si
 * Command - line or shell terminal
 * PostgresSQL
 * pgAdmin
+* Go (needed to run go .exe)
 
 ### Instructions
-Instructions can be found in the abover folder titled "Instructions_To_Run.docx"
+Instructions can be found in the abover folder. Select the instructions based off of your computer OS
 
 ## APIs
 * localhost:8080/shoelist -> Returns shoes in database
