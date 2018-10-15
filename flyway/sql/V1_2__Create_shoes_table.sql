@@ -1,6 +1,6 @@
 CREATE TABLE if not exists stockx.shoes
 (
-    productid bigint NOT NULL,
+    productid serial,
     productname text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT shoes_pkey PRIMARY KEY (productid)
 )
