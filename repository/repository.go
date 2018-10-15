@@ -3,8 +3,8 @@ package repository
 import (
 	"fmt"
 	_ "github.com/lib/pq"
-	"fitsizecalculator/model"
-	"fitsizecalculator/database"
+	"github.com/britneyepps/fitsizecalculator/model"
+	"github.com/britneyepps/fitsizecalculator/database"
 )
 
 func GetAllShoes() ([]model.Shoes, error) {

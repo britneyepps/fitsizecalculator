@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"encoding/json"
 	"net/http"
-	"fitsizecalculator/repository"
+	"github.com/britneyepps/fitsizecalculator/repository"
 	"github.com/gorilla/mux"
 )
 

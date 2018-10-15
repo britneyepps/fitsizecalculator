@@ -5,7 +5,7 @@ import (
 	"log"
 	
 	"net/http"
-	"fitsizecalculator/controller"
+	"github.com/britneyepps/fitsizecalculator/controller"
 	
 	"github.com/gorilla/mux"
 )
